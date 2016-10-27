@@ -1,0 +1,24 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="RES.Overview" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page id="MasterPage" titleLevel="Auto" showNavButton="false"
+		showHeader="true">
+		<headerContent>
+			<Text id="idAppHdrText" text="{/userinfoCollection('1')/Uname}" />
+		</headerContent>
+
+		<content>
+			<TileContainer id="idTileContainer" tiles="{path: '/dsoSet'}">
+				<tiles>
+					<StandardTile title="{Name}" icon="sap-icon://document-text"
+						press="onMasterTilePress">
+						<tooltip>
+							<RichTooltip xmlns="sap.ui.commons" text="{Ufo_profname}" />
+
+						</tooltip>
+					</StandardTile>
+				</tiles>
+			</TileContainer>
+		</content>
+
+	</Page>
+</mvc:View>

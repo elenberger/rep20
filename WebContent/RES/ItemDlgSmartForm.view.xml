@@ -1,0 +1,17 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+xmlns:smartForm="sap.ui.comp.smartform"
+		controllerName="RES.ItemDlgSmartForm" xmlns:html="http://www.w3.org/1999/xhtml">
+					<smartForm:SmartForm id="idForm1"  	editTogglable="false" flexEnabled="true">
+
+					<smartForm:customData>
+						<core:CustomData key="suppressUnit" value="false" />
+						<core:CustomData key="dateFormatSettings" value='\{"style":"short"\}' />
+						<core:CustomData key="defaultDropDownDisplayBehaviour"
+							value='descriptionAndId' />
+					</smartForm:customData>
+
+					<smartForm:Group id="idGrCha" label="{i18n>cha}" />
+					<smartForm:Group id="idGrKf" label="{i18n>kf}" />
+
+				</smartForm:SmartForm>
+</mvc:View>

@@ -1,0 +1,193 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.ui.commons" xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" controllerName="sap.ui.zmbr.asrep.RES.DetailPage"
+	xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield"
+	xmlns:form="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:ext="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	class="sapUiSizeCompact" height="100%">
+
+	<html:style type="text/css">
+		.green {
+		background-color: #66CC00;
+		}
+		.red {
+		background-color: #FF3300;
+		}
+		.blue {
+		background-color: #CC66CC;
+		.btninv {
+		display: none;
+		}
+		.invisible {
+		display: none;
+		}
+	</html:style>
+
+
+	<FixFlex xmlns="sap.ui.layout" id="id" busy="false"
+		busyIndicatorDelay="1000" visible="true" vertical="true" fixFirst="true"
+		fixContentSize="auto" minFlexSize="0">
+
+		<fixContent>
+			<Toolbar xmlns="sap.m">
+
+				<Button icon="sap-icon://nav-back" press="onBack" />
+				<ToolbarSpacer />
+
+				<Text id="idAppHdrText" text="{/userinfoCollection('1')/Uname}" />
+
+			</Toolbar>
+
+
+			<smartTable:SmartTable id="idHeaderTable"
+				visible="true" tableType="Table" entitySet="reportheaderSet"
+				useVariantManagement="false" useExportToExcel="true"
+				useTablePersonalisation="true" enableCustomFilter="true"
+				persistencyKey="idHeaderTablePKey1" useOnlyOneSolidToolbar="true"
+				editable="false" enableAutoBinding="true" editTogglable="false"
+				demandPopin="false" beforeRebindTable="onBeforeRebindHeader">
+
+				<smartTable:customToolbar>
+					<Toolbar xmlns="sap.m" id="idTlbHdr">
+						<content>
+							<ToolbarSpacer xmlns="sap.m" />
+							<Button xmlns="sap.m" id="btnHdrAdd" press="onHdrAdd"
+								text="{i18n>btnAdd}" icon="sap-icon://add" />
+							<Button xmlns="sap.m" id="btnHdrEdit" enabled="false"
+								press="onHdrEdit" text="{i18n>btnEdit}" icon="sap-icon://edit" />
+							<Button xmlns="sap.m" id="btnHdrSubmit" enabled="false"
+								press="onHdrSubmit" text="{i18n>btnSubmit}" icon="sap-icon://complete" />
+
+							<Button xmlns="sap.m" id="btnHdrApprove" press="onHdrApprove"
+								text="{i18n>btnApprove}" icon="sap-icon://accept" enabled="false" />
+
+							<Button xmlns="sap.m" id="btnHdrReject" press="onHdrReject"
+								text="{i18n>btnReject}" icon="sap-icon://decline" enabled="false" />
+							<Button xmlns="sap.m" id="btnHdrRefresh" press="onHdrRefresh"
+								icon="sap-icon://refresh" />
+							<MenuButton xmlns="sap.ui.commons" id="btnPrintKPI"
+								text="{i18n>btnPrint}" enabled="true" itemSelected="" visible="false">
+								<menu>
+									<Menu xmlns="sap.ui.unified">
+										<items> <!-- sap.ui.unified.MenuItemBase -->
+											<MenuItem  id="idPrintPC"
+												text="{i18n>btnPrintPC}" select="onPrint" ext:key="PC" />
+											<MenuItem id="idPrintLCV"
+												text="{i18n>btnPrintLCV}" select="onPrint" ext:key="CV" />
+										</items>
+									</Menu>
+								</menu>
+							</MenuButton>
+
+						</content>
+					</Toolbar>
+				</smartTable:customToolbar>
+			</smartTable:SmartTable>
+
+			<Dialog id="idHdrDialog" stretch="false" resizable="true"
+				title="{i18n>rephdr}" ext:eventAfterOpen="onHdrDlgAfterOpen"
+				afterOpen="dispatchHdrDlg"  xmlns="sap.m">
+
+				<form:SimpleForm id="idHdrForm" maxContainerCols="2"
+					editable="true" labelMinWidth="192" layout="ResponsiveLayout"
+					labelSpanL="3" labelSpanM="3" labelSpanS="12" emptySpanL="4"
+					emptySpanM="4" columnsL="1" columnsM="1">
+
+					<smartField:SmartLabel labelFor="idDealer" />
+					<smartField:SmartField value="{Dealer}" id="idDealer" />
+
+					<smartField:SmartField value="{Dealername}"
+						id="idDealername" enabled="false" />
+
+					<smartField:SmartLabel labelFor="idMonth" />
+					<smartField:SmartField value="{Month}" id="idMonth"/>
+
+					<smartField:SmartLabel labelFor="idYear" />
+					<smartField:SmartField value="{Year}" id="idYear"/>
+
+					<smartField:SmartLabel labelFor="idRepcomment" />
+					<smartField:SmartField value="{Repcomment}"	id="idRepcomment" />
+
+					<smartField:SmartLabel labelFor="idCopyitems" />
+					<smartField:SmartField value="{Copyitems}"
+						id="idCopyitems" />
+
+
+				</form:SimpleForm>
+
+				<buttons>
+					<Button id="idHdrBtnErrors" text="{i18n>btnErrors}" press="_onDisplayErrors"
+						enabled="false" />
+					<Button id="idHdrDlgBtnSave" text="{i18n>btnSave}"
+						ext:event="onHdrDlgSave" press="dispatchHdrDlg" />
+					<Button id="idHdrDlgBtnClose" text="{i18n>btnClose}"
+						ext:event="onHdrDlgClose" press="dispatchHdrDlg" />
+				</buttons>
+			</Dialog>
+
+			<Dialog xmlns="sap.m" id="idFormDialog" stretch="false" 
+				contentWidth="80%" contentHeight="80%" resizable="true" beforeOpen="onDialogOpen">
+
+				<smartForm:SmartForm id="idForm1" title=""
+					editTogglable="false" flexEnabled="true">
+
+					<smartForm:customData>
+						<core:CustomData key="suppressUnit" value="false" />
+						<core:CustomData key="dateFormatSettings" value='\{"style":"short"\}' />
+						<core:CustomData key="defaultDropDownDisplayBehaviour"
+							value='descriptionAndId' />
+					</smartForm:customData>
+
+					<smartForm:Group id="idGrCha" label="{i18n>cha}" />
+					<smartForm:Group id="idGrKf" label="{i18n>kf}" />
+
+				</smartForm:SmartForm>
+
+
+				<buttons>
+					<Button id="idFrmBtnErrors" text="{i18n>btnErrors}" press="_onDisplayErrors"
+						enabled="false" />
+					<Button id="idFrmBtnSave" text="{i18n>btnSave}" press="onSaveDialog" />
+					<Button id="idFrmBtnClose" text="{i18n>btnClose}" press="onCloseDialog" />
+				</buttons>
+			</Dialog>
+
+
+
+		</fixContent>
+		<flexContent>
+
+			<smartTable:SmartTable header="{i18n>items}"
+				id="idDataTable" busy="false" busyIndicatorDelay="1000" visible="true"
+				smartFilterId="idsmartFilterBar" entitySet="" tableType="Table"
+				useVariantManagement="true" useExportToExcel="true"
+				useTablePersonalisation="true" enableCustomFilter="true"
+				persistencyKey="idDataTablePKey2" useOnlyOneSolidToolbar="false"
+				editable="false" enableAutoBinding="true" editTogglable="false"
+				selectionMode="MultiToggle" demandPopin="false" beforeRebindTable="onBeforeRebindItems">
+
+				<smartTable:customToolbar>
+					<Toolbar xmlns="sap.m" id="idTblItm">
+						<content>
+							<ToolbarSpacer xmlns="sap.m" />
+							<Button xmlns="sap.m" id="btnUpload" enabled="false"
+								press="onItmDataUpload" text="{i18n>btnUpload}" icon="sap-icon://upload" />
+							<Button xmlns="sap.m" id="btnAdd" enabled="false" press="onAdd"
+								text="{i18n>btnAdd}" icon="sap-icon://add" />
+							<Button xmlns="sap.m" id="btnEdit" enabled="false" press="onEdit"
+								text="{i18n>btnEdit}" icon="sap-icon://edit" />
+							<Button xmlns="sap.m" id="btnView" enabled="false" press="onView"
+								text="{i18n>btnDisplay}" icon="sap-icon://display" />
+							<Button xmlns="sap.m" id="btnDel" enabled="false" press="onDel"
+								text="{i18n>btnDelete}" icon="sap-icon://delete" />
+
+						</content>
+					</Toolbar>
+				</smartTable:customToolbar>
+
+			</smartTable:SmartTable>
+
+		</flexContent>
+	</FixFlex>
+
+</core:View>

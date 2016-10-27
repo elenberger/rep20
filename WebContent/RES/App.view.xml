@@ -1,0 +1,6 @@
+<mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	controllerName="sap.ui.zmbr.asrep.RES.App" xmlns:html="http://www.w3.org/1999/xhtml"
+	class="sapUiSizeCompact">
+			<App id="idApp"/>
+ 
+</mvc:View>

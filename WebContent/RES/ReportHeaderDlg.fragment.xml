@@ -1,0 +1,43 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+	xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:layout="sap.ui.commons.layout"
+	xmlns:smartField="sap.ui.comp.smartfield" class="sapUiSizeCompact">
+
+	<Dialog id="idHdrDialog" stretch="false" resizable="true"
+		title="{i18n>rephdr}" afterOpen="onAfterOpenDialog" afterClose="onAfterCloseDialog">
+
+		<form:SimpleForm id="idHdrForm" maxContainerCols="2"
+			editable="true" labelMinWidth="192" layout="ResponsiveLayout"
+			labelSpanL="3" labelSpanM="3" labelSpanS="12" emptySpanL="4"
+			emptySpanM="4" columnsL="1" columnsM="1">
+
+			<smartField:SmartLabel labelFor="idDealer" />
+			<smartField:SmartField value="{Dealer}" id="idDealer" />
+
+			<smartField:SmartField value="{Dealername}" id="idDealername"
+				enabled="false" />
+
+			<smartField:SmartLabel labelFor="idMonth" />
+			<smartField:SmartField value="{Month}" id="idMonth" />
+
+			<smartField:SmartLabel labelFor="idYear" />
+			<smartField:SmartField value="{Year}" id="idYear" />
+
+			<smartField:SmartLabel labelFor="idRepcomment" />
+			<smartField:SmartField value="{Repcomment}" id="idRepcomment" />
+
+			<smartField:SmartLabel labelFor="idCopyitems" />
+			<smartField:SmartField value="{Copyitems}" id="idCopyitems" />
+
+
+		</form:SimpleForm>
+
+		<buttons>
+			<Button id="idHdrBtnErrors" text="{i18n>btnErrors}" press="onBtnDisplayErrors"
+				enabled="false" />
+			<Button id="idHdrDlgBtnSave" text="{i18n>btnSave}" press="onBtnSaveDialog" />
+			<Button id="idHdrDlgBtnClose" text="{i18n>btnClose}" press="onBtnCloseDialog" />
+		</buttons>
+	</Dialog>
+
+</core:FragmentDefinition>
+	

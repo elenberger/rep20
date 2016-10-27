@@ -1,0 +1,70 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="RES.Worklist" xmlns:html="http://www.w3.org/1999/xhtml">
+	
+	<html:style type="text/css">
+	  tr[data-status="S"] { background-color: #FF3300 !important; }
+	  tr[data-status="P"] { background-color: #CC66CC !important; }
+	  tr[data-status="A"] { background-color: #66CC00 !important; }
+	</html:style>
+	
+	
+	<Page id="idWorklistPage">
+		<subHeader>
+		<Toolbar xmlns="sap.m">
+			<content>
+				<ToolbarSpacer xmlns="sap.m" />
+				<SearchField id="idSearch" width="50%" showSearchButton="true"
+					search="onSearch" />
+
+				<Button xmlns="sap.m" id="btnHdrAdd" press="onCreateReport"
+					text="{i18n>btnAdd}" visible="{settings>/bLocal}" icon="sap-icon://add" />
+			</content>
+		</Toolbar>
+		</subHeader>
+		
+			<Table xmlns="sap.m"  id="idTabWorklist" items="{/reportheaderSet}"
+				updateStarted="onUpdateStarted">
+
+				<items>
+					<ColumnListItem id="idRowTemplate" type="Navigation"
+						press="onShowReport">
+						<customData>
+						<core:CustomData key="status" value="{Status}" writeToDom="true" />
+						</customData>
+						<cells>
+							<Text text="{Repkey}" />
+							<ObjectIdentifier title="{Dealer}" text="{Dealername}" />
+							<ObjectIdentifier
+								title="{ parts: [ {path: 'Month'}, {path: 'Year'} ], formatter : '.formatter.formatDate' }" />
+							<ObjectIdentifier
+								title="{ parts: [ {path: 'Status'}], formatter : '.formatter.formatStatus' }"
+								text="{Repcomment}" />
+						</cells>
+					</ColumnListItem>
+
+				</items>
+
+				<columns>
+					<Column>
+						<Label text="{i18n>Worklist.Report}" />
+					</Column>
+					<Column>
+						<Label text="{i18n>Worklist.Dealer}" />
+					</Column>
+					<Column>
+						<Label text="{i18n>Worklist.Period}" />
+					</Column>
+
+					<Column>
+						<Label text="{i18n>Worklist.Status}" />
+					</Column>
+
+				</columns>
+			</Table>
+		<footer>
+
+		</footer>
+	</Page>
+
+
+</mvc:View>

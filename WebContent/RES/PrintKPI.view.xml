@@ -1,0 +1,588 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="RES.PrintKPI" xmlns:html="http://www.w3.org/1999/xhtml">
+
+	<html:style type="text/css">
+		.borderpanel {
+		border: 1px solid #000000
+		}
+		.contentbox {
+		box-sizing: content-box;
+		}
+		.blue {
+		background-color:
+		#add8e6;
+		}
+		.grey {
+		background-color: #D3D3D3;
+		}
+
+	</html:style>
+
+	<Page title="{reportkey} - {division}" showNavButton="false">
+
+		<HBox class="sapUiSmallMarginleft">
+			<VBox width="1%" />
+			<VBox id="idService" class="sapUiSmallMarginleft borderpanel"
+				width="48%" justifyContent="Start">
+				<items>
+					<Title text="{i18n>titleService}" width="100%" titleStyle="H1"
+						textAlign="Center" />
+
+					<!-- Header -->
+					<Panel width="100%">
+						<HBox fitContainer="true">
+							<Input text="{/reportsubposSet(reportkey=0,pos=1,subpos=1)/descr}"
+								class="sapUiSmallMarginleft bordernone" editable="false" />
+							<Input value="{i18n>titleMechShop}" width="12em" class=" blue "
+								editable="false" />
+							<Input value="{i18n>titleBodyShop}" width="12em" class=" blue "
+								editable="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input text="{/reportsubposSet(reportkey=0,pos=1,subpos=1)/descr}"
+								class="sapUiSmallMarginleft bordernone" editable="false" />
+							<Input value="{i18n>titleDay}" width="6rem" class=" grey  "
+								editable="false" />
+							<Input value="{i18n>titleNight}" width="6rem" class=" grey "
+								editable="false" />
+							<Input value="{i18n>titleDay}" width="6rem" class=" grey "
+								editable="false" />
+							<Input value="{i18n>titleNight}" width="6rem" class=" grey "
+								editable="false" />
+						</HBox>
+					</Panel>
+
+					<!-- KF1 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=1,reportkey=22222)/postxt}"
+						expandable="true" expanded="true">
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=1,subpos=1)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input
+								value="{path: '/reportsubposSet(reportkey=0,pos=1,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="24em" enabled="false"
+								textAlign="End" />
+						</HBox>
+					</Panel>
+
+					<!-- KF2 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=2,reportkey=22222)/postxt}"
+						expandable="true" expanded="true">
+						<HBox fitContainer="true" class="sapUiSmallMarginleft">
+							<Input
+								value="{path: '/reportsubposSet(reportkey=0,pos=2,subpos=2)/descr'}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input
+								value="{path: '/reportsubposSet(reportkey=0,pos=2,subpos=2)/ms_d_val', type: 'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input
+								value="{path: '/reportsubposSet(reportkey=0,pos=2,subpos=2)/ms_n_val', type: 'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input
+								value="{path: '/reportsubposSet(reportkey=0,pos=2,subpos=2)/bs_d_val', type: 'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input
+								value="{path: '/reportsubposSet(reportkey=0,pos=2,subpos=2)/bs_n_val', type: 'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+					</Panel>
+
+					<!-- KF3 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=3,reportkey=22222)/postxt} "
+						expandable="true" expanded="true">
+						<HBox fitContainer="true" class="sapUiSmallMarginleft">
+							<Input value="{/reportsubposSet(reportkey=0,pos=3,subpos=1)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="24rem" textAlign="End"
+								enabled="false" />
+
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=3,subpos=2)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=2)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=2)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=2)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=2)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=3,subpos=3)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=3)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=3)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=3)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=3)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=3,subpos=4)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=4)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=4)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=4)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=4)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=3,subpos=5)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=5)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=5)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=5)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=3,subpos=5)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+
+					</Panel>
+
+					<!-- KF4 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=4,reportkey=22222)/postxt} "
+						expandable="true" expanded="true">
+						<HBox fitContainer="true" class="sapUiSmallMarginleft">
+							<Input value="{/reportsubposSet(reportkey=0,pos=4,subpos=1)/descr}"
+								width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								width="24em" textAlign="End" enabled="false" />
+
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=4,subpos=2)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=2)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=2)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=2)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=2)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=4,subpos=3)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=3)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=3)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=3)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=3)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=4,subpos=4)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=4)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=4)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=4)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=4)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=4,subpos=5)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=5)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=5)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=5)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=4,subpos=5)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+
+					</Panel>
+
+					<!-- KF5 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=5,reportkey=22222)/postxt} "
+						expandable="true" expanded="true">
+						<HBox fitContainer="true" class="sapUiSmallMarginleft">
+							<Input value="{/reportsubposSet(reportkey=0,pos=5,subpos=1)/descr}"
+								width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								width="24em" textAlign="End" enabled="false" />
+
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=5,subpos=2)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=2)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=2)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=2)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=2)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=5,subpos=3)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=3)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=3)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=3)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=3)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=5,subpos=4)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=4)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=4)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=4)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=4)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=5,subpos=5)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=5)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=5)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=5)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=5,subpos=5)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+					</Panel>
+
+
+				</items>
+			</VBox>
+			<VBox width="2%" />
+			<VBox id="idSparepars" width="47%" class="sapUiLargeMarginleft borderpanel">
+				<items>
+					<Title text="{i18n>titleSpareparts}" width="100%" titleStyle="H1"
+						textAlign="Center" />
+
+					<!-- Header -->
+					<Panel width="100%">
+						<HBox fitContainer="true">
+							<Input text="{/reportsubposSet(reportkey=0,pos=1,subpos=1)/descr}"
+								class="sapUiSmallMarginleft bordernone" editable="false" />
+							<Input value="{i18n>titleMechShop}" width="12em" class=" blue "
+								editable="false" />
+							<Input value="{i18n>titleBodyShop}" width="12em" class=" blue "
+								editable="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input text="{/reportsubposSet(reportkey=0,pos=1,subpos=1)/descr}"
+								class="sapUiSmallMarginleft bordernone" editable="false" />
+							<Input value="{i18n>titleDay}" width="6rem" class=" grey  "
+								editable="false" />
+							<Input value="{i18n>titleNight}" width="6rem" class=" grey "
+								editable="false" />
+							<Input value="{i18n>titleDay}" width="6rem" class=" grey "
+								editable="false" />
+							<Input value="{i18n>titleNight}" width="6rem" class=" grey "
+								editable="false" />
+						</HBox>
+					</Panel>
+
+					<!-- KF6 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=6,reportkey=22222)/postxt}"
+						expandable="true" expanded="true">
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=6,subpos=1)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=6,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="24em" enabled="false"
+								textAlign="End" />
+						</HBox>
+					</Panel>
+
+					<!-- KF7 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=7,reportkey=22222)/postxt}"
+						expandable="true" expanded="true">
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=7,subpos=1)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=7,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="24em" enabled="false"
+								textAlign="End" />
+						</HBox>
+					</Panel>
+					<!-- KF8 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=8,reportkey=22222)/postxt}"
+						expandable="true" expanded="true">
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=8,subpos=1)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=8,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="24em" enabled="false"
+								textAlign="End" />
+						</HBox>
+					</Panel>
+					<!-- KF9 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=9,reportkey=22222)/postxt}"
+						expandable="true" expanded="true">
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=9,subpos=1)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=9,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="24em" enabled="false"
+								textAlign="End" />
+						</HBox>
+					</Panel>
+
+					<!-- KF10 -->
+					<Panel width="100%"
+						headerText="{/reportposSet(pos=10,reportkey=22222)/postxt} "
+						expandable="true" expanded="true">
+						<HBox fitContainer="true" class="sapUiSmallMarginleft">
+							<Input value="{/reportsubposSet(reportkey=0,pos=10,subpos=1)/descr}"
+								width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								width="24em" textAlign="End" enabled="false" />
+
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=10,subpos=2)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=2)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=2)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=2)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=2)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=10,subpos=3)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=3)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=3)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=3)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=3)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=10,subpos=4)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=4)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=4)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=4)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=4)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=10,subpos=5)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=5)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=5)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=5)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=10,subpos=5)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+					</Panel>
+
+					<!-- KF11 -->
+					<Panel width="100%"
+						headerText="{/reportposSet(pos=11,reportkey=22222)/postxt} "
+						expandable="true" expanded="true">
+						<HBox fitContainer="true" class="sapUiSmallMarginleft">
+							<Input value="{/reportsubposSet(reportkey=0,pos=11,subpos=1)/descr}"
+								width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								width="24em" textAlign="End" enabled="false" />
+
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=11,subpos=2)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=2)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=2)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=2)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=2)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=11,subpos=3)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=3)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=3)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=3)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=3)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=11,subpos=4)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=4)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=4)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=4)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=4)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=11,subpos=5)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=5)/ms_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=5)/ms_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=5)/bs_d_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=11,subpos=5)/bs_n_val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="6em" textAlign="End"
+								enabled="false" />
+						</HBox>
+					</Panel>
+					<!-- KF12 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=12,reportkey=22222)/postxt}"
+						expandable="true" expanded="true">
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=12,subpos=1)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=12,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="24em" enabled="false"
+								textAlign="End" />
+						</HBox>
+					</Panel>
+					<!-- KF13 -->
+					<Panel width="100%" headerText="{/reportposSet(pos=13,reportkey=22222)/postxt}"
+						expandable="true" expanded="true">
+						<HBox fitContainer="true">
+							<Input value="{/reportsubposSet(reportkey=0,pos=13,subpos=1)/descr}"
+								class="sapUiSmallMarginleft" width="auto" enabled="false" />
+							<Input value="{path: '/reportsubposSet(reportkey=0,pos=13,subpos=1)/val', type:'sap.ui.model.type.Float'}"
+								class="sapUiSmallMarginleft" width="24em" enabled="false"
+								textAlign="End" />
+						</HBox>
+					</Panel>
+
+
+				</items>
+			</VBox>
+			<VBox width="1%" />
+		</HBox>
+
+	</Page>
+</core:View>

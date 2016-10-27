@@ -1,0 +1,204 @@
+{
+	"_version": "2.0.1",
+	"start_url": "index.html",
+	"sap.app": 
+	{
+		"_version": "2.0.1",
+		"id": "sap.ui.zmbr.asrep",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": 
+		{
+			"version": "2.0.1"
+		},
+
+		"title": "{{app.Identity}}",
+		"dataSources": 
+		{
+			"ZUFO_DFRM_SRV": 
+			{
+				"uri": "/sap/opu/odata/sap/ZUFO_DFRM_SRV/",
+				"type": "OData",
+				"settings": 
+				{
+					"defaultCountMode": "None",
+					"defaultBindingMode": "TwoWay",
+					"odataVersion": "2.0",
+					"refreshAfterChange": "false"
+				}
+			}
+		}
+	},
+
+	"sap.ui": 
+	{
+		"_version": "1.1.0",
+		"icons": 
+		{
+			"icon": "sap-icon://documents",
+			"favIcon": "sap-icon://documents"
+		},
+
+		"deviceTypes": 
+		{
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+
+		"supportedThemes": 
+		[
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+
+	"sap.ui5": 
+	{
+		"_version": "1.1.0",
+		"dependencies": 
+		{
+			"minUI5Version": "1.38",
+			"libs": 
+			{
+				"sap.m": 
+				{
+					"minVersion": "1.38"
+				}
+			}
+		},
+
+		"models": 
+		{
+			"i18n": 
+			{
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+
+			"": 
+			{
+				"dataSource": "ZUFO_DFRM_SRV"
+			}
+		},
+
+		"rootView": 
+		{
+			"viewName": "sap.ui.zmbr.asrep.RES.App",
+			"id": "idApp",
+			"type": "XML"
+		},
+
+		"handleValidation": false,
+		"config": 
+		{
+			
+		},
+
+		"routing": 
+		{
+			"config": 
+			{
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "sap.ui.zmbr.asrep.RES",
+				"controlId": "idApp",
+				"controlAggregation": "pages",
+				"transition": "slide",
+				"bypassed": 
+				{
+					"target": "notFound"
+				}
+			},
+
+			"routes": 
+			[
+				{
+					"pattern": "",
+					"name": "appHome",
+					"target": "home"
+				},
+
+				{
+					"pattern": "reports/{report}",
+					"name": "reports",
+					"target": "worklist"
+				},
+
+				{
+					"pattern": "report/{entityset}/{repkey}",
+					"name": "report",
+					"target": "report"
+				},
+				{
+					"pattern": "printkpi/{repkey}/{division}",
+					"name": "printkpi",
+					"target": "printkpi"
+				}
+			],
+
+			"targets": 
+			{
+				"home": 
+				{
+					"viewName": "Overview",
+					"viewLevel": 1,
+					"viewId": "idOverview"
+				},
+
+				"worklist": 
+				{
+					"viewName": "Worklist",
+					"viewLevel": 2,
+					"viewId": "idWorklist"
+				},
+
+				"report": 
+				{
+					"viewName": "Report",
+					"viewLevel": 3,
+					"viewId": "idReport"
+				},
+
+				"printkpi": 
+				{
+					"viewName": "PrintKPI",
+					"viewLevel": 4,
+					"viewId": "idPrintKPI"
+				},
+				
+				"notFound": 
+				{
+					"viewName": "NotFound",
+					"transition": "show"
+				}
+			}
+		},
+
+		"extends": 
+		{
+			"component": "sap.ui.zmbr.asrep",
+			"extensions": 
+			{
+				
+			}
+		},
+
+		"contentDensities": 
+		{
+			"compact": true,
+			"cozy": true
+		}
+	},
+
+	"sap.platform.abap": 
+	{
+		"_version": "1.1.0",
+		"uri": "<uri>"
+	},
+
+	"sap.platform.hcp": 
+	{
+		"_version": "1.1.0"
+	}
+}

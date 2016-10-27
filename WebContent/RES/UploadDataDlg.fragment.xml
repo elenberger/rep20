@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.commons.layout" class="sapUiSizeCompact" >
+
+	<Dialog xmlns="sap.m" id="idUploadData"  modal="true"
+		 resizable="true" beforeOpen="beforeOpen"
+	    title="{i18n>uploaddlg}">
+
+		<layout:VerticalLayout id="idL">
+
+				<FileUploader xmlns="sap.ui.unified" id="idFileUploader">
+				</FileUploader>
+
+				<Button id="idB1" text="{i18n>btnProcess}" press="onUploadDlgProcessFile" />
+
+				<Table xmlns="sap.ui.table" id="idUploadTable" />
+
+		</layout:VerticalLayout>
+
+		<buttons>
+		
+			<Button id="btnUploadDlgErrors" text="{i18n>btnErrors}" press="onPressUploadDlgErrors" />
+			<Button id="btnUploadDldUpload" text="{i18n>btnUpload}" press="onUploadDlgUpload" />
+			<Button id="btnUploadDldClose" text="{i18n>btnClose}" press="onUploadDlgClose" />
+		</buttons>
+	</Dialog>
+
+</core:FragmentDefinition>
