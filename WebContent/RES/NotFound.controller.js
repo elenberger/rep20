@@ -1,4 +1,4 @@
-sap.ui.controller("RES.NotFound", {
+sap.ui.controller("sap.ui.zmbr.asrep20.RES.NotFound", {
 
 	getRouter : function () {
 		return sap.ui.core.UIComponent.getRouterFor(this);

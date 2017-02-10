@@ -1,4 +1,4 @@
-jQuery.sap.declare("sap.ui.zmbr.asrep.DetailHdrFormController");
+jQuery.sap.declare("sap.ui.zmbr.asrep20.DetailHdrFormController");
 
 // sap.ui.core.mvc.Controller.extend
 

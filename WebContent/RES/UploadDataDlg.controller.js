@@ -1,29 +1,46 @@
-sap.ui.controller("sap.ui.zmbr.asrep.RES.UploadDataDlg", {  
-  
+sap.ui.controller("sap.ui.zmbr.asrep20.RES.UploadDataDlg", {  
 
+// Public methods
+  getUploadModel: function() {
+     return this.getDialog().getModel("uploadModel");      
+  },    
+  
+  getErrModel: function() {
+      return this.getDialog().getModel("uploadErrModel");      
+   },  
+  
+  getDialog: function() {
+    return this._oDialog;  
+  },
+  
+    
+ // Private methods.
+    
  
   onUploadDlgProcessFile : function(evt) {
+    var oDialog = this.getDialog(), 
+        oUploadModel = this.getUploadModel();
+	  
+    oDialog._zErrors = 0;
     
-    this.AppController._getUploadDataDlg()._zErrors  = 0;
-    
-    evt.getSource().getParent().getModel().getData().rows = [];
-    evt.getSource().getParent().getModel().refresh();
+    oUploadModel.getData().rows = [];
+    oUploadModel.refresh();
     
     this._parseUploadFile(evt);
   },
   
   _parseUploadFile : function(evt) {
+      
+     var oDialog = this.getDialog(),
+         oUploadModel = this.getUploadModel(),
+         oErrModel    = this.getErrModel();
+	  
+     var aCatalog = oUploadModel.getData("/columns").columns;
 
-    var aCatalog = evt.getSource().getModel().getData(
-    "/columns").columns;
-
-    // Errors
-    oErrModel = this.AppController._getUploadDataDlg().getModel("ErrModel");
     oErrModel.getData().aErrors = [];
     
 
     var oFile = sap.ui.getCore().byId('idFileUploader').oFileUpload.files[0];
-
     if (!oFile) {
       return
     }
@@ -86,24 +103,27 @@ sap.ui.controller("sap.ui.zmbr.asrep.RES.UploadDataDlg", {
           
           if (jsline[fieldname]==='')   {
             var sMsg = sap.ui.getCore().getModel("i18n").getResourceBundle().getText("errorLine", [jsline.zas_rownum]);
-            reader.oController._ErrModelAddMsg(oErrModel, sMsg ); //'строка' + jsline.zas_rownum + ' : Содержит пустые значения!');
-            
+            reader.oController._ErrModelAddMsg(oErrModel, sMsg ); // 'строка'
+																            
           }
 
           if (aCatalog[column_index].type === 'Edm.DateTime') {
             
-            //split into date and time
+            // split into date and time
             var aDateTime = jsline[fieldname].split(' ');
-            var aDate = aDateTime[0].split('.');    //jsline[fieldname].split('.');
+            var aDate = aDateTime[0].split('.');    
             
-            var aTime = [12, 0, 0];
+            var aTime = [];
             if (aDateTime.length == 2) {
                aTime = aDateTime[1].split(':');
             } 
+            var iHours   = (aTime[0]) ? parseInt(aTime[0]) : 12;
+            var iMinutes = (aTime[1]) ? parseInt(aTime[1]) : 0;
+            var iSeconds = (aTime[2]) ? parseInt(aTime[2]) : 0;
             
-            var oDate = new Date(parseInt(aDate[2]), parseInt(aDate[1])-1, parseInt(aDate[0]), parseInt(aTime[0]), parseInt(aTime[1]), parseInt(aTime[2]), 0 );
-            jsline[fieldname] = oDate;
-
+            var oDate = new Date(parseInt(aDate[2]), parseInt(aDate[1])-1, parseInt(aDate[0]), iHours, iMinutes, iSeconds, 0 );
+            jsline[fieldname] = oDate;            
+            
           }
 
 
@@ -127,8 +147,7 @@ sap.ui.controller("sap.ui.zmbr.asrep.RES.UploadDataDlg", {
             jsline[fieldname] = Number(oNumberFormat.parse(jsline[fieldname])).toFixed(3)
             if (jsline[fieldname]==='NaN') {
               var sMsg = sap.ui.getCore().getModel("i18n").getResourceBundle().getText("errorLine", [jsline.zas_rownum]);
-              reader.oController._ErrModelAddMsg(oErrModel, sMsg ); //'строка ' + jsline.zas_rownum + ' : содержит некорректное значение!' );
-              
+              reader.oController._ErrModelAddMsg(oErrModel, sMsg ); 
             }
 
           }
@@ -150,27 +169,25 @@ sap.ui.controller("sap.ui.zmbr.asrep.RES.UploadDataDlg", {
 
       if (aRows && aRows.length > 0) {
 
-        this.oController._UploadDlgBindData(aRows);
+	  this.oController._UploadDlgBindData.apply(this.oController, [ oDialog, aRows ]);
+      // this.oController._UploadDlgBindData(oDialog, aRows);
         
         if (oErrModel.getData().aErrors.length > 0) {
         
-        sMsg = sap.ui.getCore().getModel("i18n").getResourceBundle().getText("errorDataLoading");
+        sMsg = oDialog.getModel("i18n").getResourceBundle().getText("errorDataLoading");
             
-        sap.m.MessageBox.show(
-        		sMsg,
-                {
-                  icon : sap.m.MessageBox.Icon.ERROR
-                });
-        this.oController.AppController._getUploadDataDlg()._zErrors  = oErrModel.getData().aErrors.length + 1;
+        sap.m.MessageBox.show(sMsg, {icon : sap.m.MessageBox.Icon.ERROR});
+        oDialog._zErrors  = oErrModel.getData().aErrors.length + 1;
+        oDialog.getButtons()[0].setEnabled(true);
 
-        }       
+        }  else
+        	{
+        	oDialog.getButtons()[0].setEnabled(false);
+        	}
         
       } else {
         alert('No data for import!');
       }
-      
-      
-      this.oController._fireDialogChange(this.oController.AppController._getUploadDataDlg());
       
     };
 
@@ -209,170 +226,130 @@ sap.ui.controller("sap.ui.zmbr.asrep.RES.UploadDataDlg", {
   },
   
   onUploadDlgClose : function(evt) {
-    var oDialog = this.AppController._getUploadDataDlg();
+    var oDataModel = evt.getSource().getModel();
+    
+    oDataModel.resetChanges();
+    oDataModel.refresh(false, true);
 
-    this.AppController.getView().getModel().resetChanges();
-    this.AppController.getView().getModel().refresh(false, true);
-
-    oDialog.close();
+    this.getDialog().close();
 
   },
   
   onUploadDlgUpload : function(evt) {
     // create data
 
-    var oDialog = this.AppController._getUploadDataDlg();
+    var oDialog = this.getDialog(),
+        oView = oDialog.getParent();
     
-    var oErrModel = oDialog.getModel('ErrModel');
+    var oErrModel = this.getErrModel(),
+        oErrData     = oErrModel.getData();
+
+    var oUploadModel = this.getUploadModel(),
+        oUploadData     = oUploadModel.getData();
     
-    if (oErrModel.getData().aErrors.length > 0) {
+    if (oErrData.aErrors) {
+      if (oErrData.aErrors.length > 0) {
       
-      sMsg = sap.ui.getCore().getModel("i18n").getResourceBundle().getText("errorDataLoading");
+         sMsg = sap.ui.getCore().getModel("i18n").getResourceBundle().getText("errorDataLoading");
       
-      sap.m.MessageBox.show(
-              sMsg,
-              {
-                icon : sap.m.MessageBox.Icon.ERROR
-              });
+        sap.m.MessageBox.show(sMsg, {icon : sap.m.MessageBox.Icon.ERROR});
       return;
-    } 
+      } 
+    }
     
     var sPath = "/" + oDialog._zoEntitySet.name;
-    var oData = oDialog.getModel().getData().rows;
-    var oColumns = oDialog.getModel().getData().columns;
+    var oRowsData = oUploadData.rows;
+    var oColumns = oUploadData.columns;
 
-    var oModel = this.AppController.getView().getModel();
-    oModel.resetChanges();
+    var oDataModel = evt.getSource().getModel();
+    oDataModel.resetChanges();
 
+    for (i = 0; i < oRowsData.length; i++) {
 
+	oRowsData[i].repkey = oDialog.zsRepkey;
 
-    for (i = 0; i < oData.length; i++) {
-
-      oData[i].repkey = oDialog.zsRepkey;
-
-      var oEntryContext = oModel.createEntry(sPath, {
-        properties : oData[i]
-// groupId : 'upldata'
+      var oEntryContext = oDataModel.createEntry(sPath, {
+        properties : oRowsData[i]
       } );
     }
 
-// oModel.setProperty("zuforkey", oDialog.zsRepkey, oEntryContext);
+    oDialog.setBusy(true);
+    
+    oDataModel.modelhelper.submitChanges(function(iErrCount) {
 
-    this._submitChanges(oDialog);
+		oDialog.setBusy(false);
+
+		// Nothing to post => close dialog
+		if (iErrCount < 0)
+			return oDialog.close();
+
+		// posted without errors => fire list update and close dialog
+		if (iErrCount == 0) {
+			// smart table rebind
+			oView.getController()._refresh();
+			return oDialog.close();
+		}
+
+		// Errors
+		sap.m.MessageBox.show(oView.getController().formatter._getResourceModel(
+				oView).getProperty('updateErrors'), {
+			icon : sap.m.MessageBox.Icon.ERROR
+		});
+
+		oDialog.getButtons()[0].setEnabled(true);
+
+	});
 
   },
   
   // Bind upload dialog data to table
 
-  _UploadDlgBindData : function(aRows) {
+  _UploadDlgBindData : function(oDialog, aRows) {
 
-    var oDialog = this.AppController._getUploadDataDlg();
-    var oModel = oDialog.getModel();
+    var oLocModel = this.getUploadModel();
 
     var oTable = sap.ui.getCore().byId('idUploadTable');
 
-    oModel.setData({
-      rows : aRows
-    }, true);
-
+    oLocModel.setData({rows : aRows}, true);
+    
+    oLocModel.refresh();
+    oTable.setModel(oLocModel);
     oTable.bindRows("/rows");
   },
 
- 
-  _submitChanges : function(oDialog) {
-
-    var oModel = sap.ui.getCore().byId("app").getModel();
-    var oController = this;
-
-    //
-    sap.ui.getCore().getMessageManager()
-    .removeAllMessages();
-    oDialog._zErrors = 0;
-
-// if (!oModel.hasPendingChanges()) {
-//
-// oDialog.close();
-// return;
-//
-// }
-
-    oDialog.setBusy(true);
-    oDialog._zPosted = false;
-
-    oModel
-    .submitChanges({
-     // groupId : 'upldata',
-
-      success : function(data) {
-
-        var aErr = sap.ui.getCore()
-        .getMessageManager()
-        .getMessageModel().oData;
-
-        
-        // Check responses at first.
-        
-        var oResp = data.__batchResponses[0];
-        
-        if (oResp.response) {
-          if (oResp.response.statusCode !='200') {
-            aErr.push({type: 'Error', message: '{i18n>errorDataLoading}' })                      
-          } 
-        }
-        
-
-        for (i = 0; i < aErr.length; i++) {
-
-          if (aErr[i].type === 'Error') {
-
-            oDialog._zErrors++;
-          }
-
-        }
-        
-        if (oDialog._zErrors === 0) {
-
-          oDialog.close();
-        } else {
-         sMsg = sap.ui.getCore().getModel("i18n").getResourceBundle().getText("errorDataLoading");
-          sap.m.MessageBox.show(
-        		  sMsg,
-                  {
-                    icon : sap.m.MessageBox.Icon.ERROR
-                  });
-
-          oDialog.setBusy(false);
-          oController._fireDialogChange(oDialog);
-        }
-
-      },
-
-      error : function(err) {
-        alert("Technical error");
-        oDialog.setBusy(false);
-
-      }
-    });
-
-  },
-
+// Initial event
+  
   beforeOpen : function(evt) {
-    
-    var oDialog = evt.getSource()
-    
-    var aColumns = this._UploadDlgBuildFldCatalog(oDialog._zoEntityTypeDesc);
+      var oDialog = evt.getSource(),
+          oController = this;
       
-    oDialog.getModel().setData({
-      columns: aColumns
-    });
-
+      // set initial data
+      oController._oDialog = oDialog;
+      
+      if (!this.getUploadModel()){
+        oDialog.setModel(new sap.ui.model.json.JSONModel(), "uploadModel");
+      }
+      
+      if (!this.getErrModel()){
+        oDialog.setModel(new sap.ui.model.json.JSONModel(), "uploadErrModel");
+      }
+      
+      
+       
+    var aColumns = this._UploadDlgBuildFldCatalog(oDialog._zoEntityTypeDesc);
+    
+    var oUploadModel = this.getUploadModel();
+    
+    oUploadModel.setData({columns: aColumns});
+    oUploadModel.refresh();
+    
     var oTable = sap.ui.getCore().byId('idUploadTable');
     oTable.destroyColumns();
 
-    oTable.bindColumns("/columns", function(index, context) {
-      var sColumnId = context.getObject().columnId;
-      var sLabel = context.getObject().label;
-      var sType = context.getObject().type;
+    oTable.bindColumns("uploadModel>/columns", function(index, context) {
+      var sColumnId = context.getObject().columnId,
+          sLabel = context.getObject().label;
+          sType = context.getObject().type;
 
       if (sType === 'Edm.DateTime') {
 
@@ -427,8 +404,8 @@ sap.ui.controller("sap.ui.zmbr.asrep.RES.UploadDataDlg", {
 
           var iRow = evt.getSource().getParent().getIndex();
 
-          var oModel =  evt.getSource().getModel();
-          var aRows = evt.getSource().getModel().getData().rows;
+          var oModel =  oController.getUploadModel();
+          var aRows = oModel.getData().rows;
           aRows.splice(iRow, 1);
           oModel.refresh();
           
@@ -439,20 +416,10 @@ sap.ui.controller("sap.ui.zmbr.asrep.RES.UploadDataDlg", {
     
   },
   
-  _fireDialogChange : function(oDialog) {
-    
-    if (oDialog._zErrors > 0) {
-      oDialog._zbtnErrors.setEnabled(true);
-     
-    } else {
-      oDialog._zbtnErrors.setEnabled(false);
-      }
-    
-  },
 
   onPressUploadDlgErrors : function(evt) {
     
-    var aFileErrors = this.AppController._getUploadDataDlg().getModel("ErrModel").getData().aErrors;
+    var aFileErrors = this.getErrModel().getData().aErrors;
     var aGwErrors   = sap.ui.getCore().getMessageManager().getMessageModel().getData();
     
     var aData = aFileErrors.concat(aGwErrors);
@@ -519,7 +486,5 @@ sap.ui.controller("sap.ui.zmbr.asrep.RES.UploadDataDlg", {
     var oMessage = {type: 'Error', message: sText};
     oErrModel.getData().aErrors.push(oMessage);
   }
-  
-  
-  
+    
 })

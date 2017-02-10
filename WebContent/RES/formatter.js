@@ -1,8 +1,10 @@
-jQuery.sap.declare("sap.ui.zmbr.asrep.formatter");
+jQuery.sap.declare("sap.ui.zmbr.asrep20.formatter");
 
-sap.ui.zmbr.asrep.formatter = function() {
+sap.ui.zmbr.asrep20.formatter = function() {
 
 	return {
+		_aDisplayTemplates : [],
+
 		_getResourceModel : function(oControl) {
 			return oControl.getModel("i18n");
 		},
@@ -42,9 +44,9 @@ sap.ui.zmbr.asrep.formatter = function() {
 
 		},
 		formatReportTitle : function(sReport) {
-            var oView = this.getView(); 
+			var oView = this.getView();
 			var oModel = this.formatter._getResourceModel(oView);
-			
+
 			if (!oModel)
 				return sReport;
 
@@ -60,7 +62,12 @@ sap.ui.zmbr.asrep.formatter = function() {
 		refreshItmStatus : function(oController) {
 			var oModel = oController.getView().getModel("settings");
 
-			var bEditable = oModel.getProperty("/bEditable");
+			var bEditable = false;
+			if (oModel.getProperty("/sMode") === 'C'
+					|| oModel.getProperty("/sMode") === 'U') {
+				bEditable = true;
+			}
+
 			var bItemSelected = oModel.getProperty("/bItemSelected");
 
 			var oItem = oModel.getProperty("/oItem");
@@ -68,10 +75,8 @@ sap.ui.zmbr.asrep.formatter = function() {
 			if (bItemSelected) {
 
 				for ( var oControl in oItem) {
-					if (oItem[oControl] !== 'bView')
-						oItem[oControl] = bEditable;
+					oItem[oControl] = bEditable;
 				}
-				oItem['bView'] = true;
 
 			} else
 
@@ -79,21 +84,62 @@ sap.ui.zmbr.asrep.formatter = function() {
 				for ( var oControl in oItem) {
 					oItem[oControl] = false;
 				}
-				
+
+				oItem['bUpload'] = bEditable;
+				oItem['bAdd'] = bEditable;
+
 			}
-			
-			if (bEditable) {
-				oItem['bUpload'] = true;
-			    oItem['bAdd'] = true;
-			    
-			}
-			
+
 			oModel.refresh();
 
 		},
-		
-		test: function(sParam) {
-			return false;
+
+		getDisplayTemplates : function(oModel, callback) {
+			var oFormatter = this;
+
+			if (oFormatter._aDisplayTemplates.length > 0)
+				return callback(oFormatter._aDisplayTemplates);
+
+			oModel
+					.read(
+							"/templatesSet",
+							{
+								async : true,
+								success : function(oData) {
+									var aTemplates = oData.results;
+
+									var aResults = [];
+									var oResult = {};
+									var oElem = {};
+
+									for (i = 0; i < aTemplates.length; i++) {
+
+										if (aTemplates[i].Dataset !== oResult.Dataset) {
+
+											if (oResult.Dataset) {
+												aResults.push(oResult);
+											}
+											oResult = {};
+											oResult.Dataset = aTemplates[i].Dataset;
+											oResult.Report = aTemplates[i].Report;
+											oResult.Qlf = {};
+
+										}
+
+										oResult.Qlf[aTemplates[i].Fieldname
+												.toLowerCase()] = aTemplates[i].Fieldvalue;
+
+									}
+
+									if (oResult.Dataset) {
+										aResults.push(oResult);
+									}
+
+									oFormatter._aDisplayTemplates = aResults;
+									return callback(oFormatter._aDisplayTemplates);
+
+								}
+							});
 		}
 	}
 }

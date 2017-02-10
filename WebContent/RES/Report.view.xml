@@ -1,96 +1,109 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
-	xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="RES.Report"
+	xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable" controllerName="sap.ui.zmbr.asrep20.RES.Report"
 	xmlns:smartForm="sap.ui.comp.smartform" xmlns:html="http://www.w3.org/1999/xhtml">
-	<FixFlex id="idReportObj" xmlns="sap.ui.layout" visible="true"
-		vertical="true" fixFirst="true" fixContentSize="auto" minFlexSize="0">
 
-		<fixContent>
+	<Page xmlns="sap.m" id="idReportObj" enableScrolling="true">
+		<content>
 
-			<ObjectHeader xmlns="sap.m" id="idRepHeader" title="{Dealername}"
-
-				number="{Repkey}" numberUnit="" introActive="" titleActive="true"
-				showTitleSelector="false" numberState="None" condensed="false"
-				backgroundDesign="" responsive="true" fullScreenOptimized="false">
-				<attributes>
-					<ObjectAttribute title="{i18n>RepPage.Type}"
-						text="{ parts: [ {path:'Report'}], formatter : '.formatter.formatReportTitle' }" />
-					<ObjectAttribute title="{i18n>RepPage.Period}"
-						text="{ parts: [ {path: 'Month'}, {path: 'Year'} ], formatter : '.formatter.formatDate' }" />
-				</attributes>
-				<statuses>
-					<ObjectStatus title="{i18n>RepPage.Status}"
-						text="{ parts: [ {path: 'Status'}], formatter : '.formatter.formatStatus' }" />
-				</statuses>
-				<headerContainer>
-					<HeaderContainer xmlns="sap.suite.ui.commons">
-						<items>
-							<HBox xmlns="sap.m" class="sapUiSmallMarginTop">
-
-								<items>
-
-									<Button enabled="{= ${Status}==='S' ? true:false }" class="sapUiSmallMarginEnd"
-										visible="{settings>/bLocal}" press="onSubmit" text="{i18n>btnSubmit}"
-										icon="sap-icon://complete" />
-									<Button press="onApprove" text="{i18n>btnApprove}" class="sapUiSmallMarginEnd"
-										icon="sap-icon://accept" enabled="{= ${Status}==='P' ? true:false }"
-										visible="{settings>/bCentral}" />
-									<Button press="onReject" text="{i18n>btnReject}" class="sapUiSmallMarginEnd"
-										visible="{settings>/bCentral}" icon="sap-icon://decline"
-										enabled="{= ( ${Status}==='A' || ${Status}==='P' ) ? true:false }" />
-								</items>
-							</HBox>
-						</items>
-					</HeaderContainer>
-
-
-				</headerContainer>
-			</ObjectHeader>
-
-
-			<Toolbar xmlns="sap.m" id="idTblItm">
-				<content>
-					<Text text="{i18n>items}" />
-					<ToolbarSpacer xmlns="sap.m" />
-					<Button xmlns="sap.m" id="btnUpload" enabled="{settings>/oItem/bUpload}"
-						press="onItmDataUpload" text="{i18n>btnUpload}" icon="sap-icon://upload" />
-					<Button xmlns="sap.m" id="btnAdd" enabled="{settings>/oItem/bAdd}"
-						press="onAddItem" text="{i18n>btnAdd}" icon="sap-icon://add" />
-					<Button xmlns="sap.m" id="btnEdit" enabled="{settings>/oItem/bEdit}"
-						press="onEditItem" text="{i18n>btnEdit}" icon="sap-icon://edit" />
-					<Button xmlns="sap.m" id="btnView" enabled="{settings>/oItem/bView}"
-						press="onDisplayItem" text="{i18n>btnDisplay}" icon="sap-icon://display" />
-					<Button xmlns="sap.m" id="btnDel" press="onDeleteItem"
-						enabled="{settings>/oItem/bDelete}" text="{i18n>btnDelete}" icon="sap-icon://delete" />
-					<MenuButton xmlns="sap.ui.commons" id="btnPrintKPI" 
-								text="{i18n>btnPrint}" visible="{settings>/bKPIRep}" >
+			<Panel xmlns="sap.m" id="idHeader" expandable="true" expanded="true">
+				<headerToolbar>
+					<Toolbar xmlns="sap.m" id="idTblHdr">
+						<content>
+							<Text text="{i18n>RepPage.headertext}" />
+							<ToolbarSpacer xmlns="sap.m" />
+							
+							<!-- technical element -->
+							<Label visible="false" text="{path:'/sMode', model: 'settings', events: {change: '.onStateChanged'}}"/>
+							
+							
+							<Button enabled="{= ${Status}==='S' ? true:false }" class="sapUiSmallMarginEnd"
+								visible="{settings>/bLocal}" press="onSubmit" text="{i18n>btnSubmit}"
+								icon="sap-icon://complete" />
+							<Button press="onApprove" text="{i18n>btnApprove}" class="sapUiSmallMarginEnd"
+								icon="sap-icon://accept" enabled="{= ${Status}==='P' ? true:false }"
+								visible="{settings>/bCentral}" />
+							<Button press="onReject" text="{i18n>btnReject}" class="sapUiSmallMarginEnd"
+								visible="{settings>/bCentral}" icon="sap-icon://decline"
+								enabled="{= ( ${Status}==='A' || ${Status}==='P' ) ? true:false }" />
+							<Button xmlns="sap.m" id="btnEdit"
+								enabled="{= ${Status}==='S' ? true:false }" visible="{settings>/bLocal}"
+								press="onEdit" text="{i18n>btnEdit}" icon="sap-icon://edit" />
+							<Button xmlns="sap.m" id="btnSave"
+								enabled="{= ${settings>/sMode}==='R' ? false:true }" visible="{settings>/bLocal}"
+								press="onSave" text="{i18n>btnSave}" icon="sap-icon://save" />
+							<Button xmlns="sap.m" id="btnCancel"
+								enabled="{= ${settings>/sMode}==='R' ? false:true }" visible="{settings>/bLocal}"
+								press="onCancel" text="{i18n>btnCancel}" icon="sap-icon://reset" />
+							<Button xmlns="sap.m" id="btnErrors" press="onDisplayErrors"
+								icon="sap-icon://message-error" />
+							<MenuButton xmlns="sap.ui.commons" id="btnPrintKPI"
+								text="{i18n>btnPrint}" visible="{settings>/bKPIRep}">
 								<menu>
 									<Menu xmlns="sap.ui.unified">
-										<items> 
-											<MenuItem  id="idPrintPC"
-												text="{i18n>btnPrintPC}" select="onPrintPC" />
-											<MenuItem id="idPrintLCV"
-												text="{i18n>btnPrintLCV}" select="onPrintCV"/>
+										<items>
+											<MenuItem id="idPrintPC" text="{i18n>btnPrintPC}"
+												select="onPrintPC" />
+											<MenuItem id="idPrintLCV" text="{i18n>btnPrintLCV}"
+												select="onPrintCV" />
 										</items>
 									</Menu>
 								</menu>
 							</MenuButton>
+						</content>
+					</Toolbar>
+				</headerToolbar>
+				<content>
+					<ObjectHeader xmlns="sap.m" id="idRepHeader" title="{Dealername}"
+
+						number="{Repkey}" numberUnit="" introActive="" titleActive="true"
+						showTitleSelector="false" numberState="None" condensed="false"
+						backgroundDesign="" responsive="true" fullScreenOptimized="false">
+						<attributes>
+							<ObjectAttribute title="{i18n>RepPage.Type}"
+								text="{ parts: [ {path:'Report'}], formatter : '.formatter.formatReportTitle' }" />
+							<ObjectAttribute title="{i18n>RepPage.Period}"
+								text="{ parts: [ {path: 'Month'}, {path: 'Year'} ], formatter : '.formatter.formatDate' }" />
+						</attributes>
+						<statuses>
+							<ObjectStatus title="{i18n>RepPage.Status}"
+								text="{ parts: [ {path: 'Status'}], formatter : '.formatter.formatStatus' }" />
+						</statuses>
+					</ObjectHeader>
 				</content>
-			</Toolbar>
-		</fixContent>
-		<flexContent>
+			</Panel>
+			
+					<Panel id="idItems" xmlns="sap.m" expandable="true" expanded="true">
 
-		</flexContent>
+				<headerToolbar>
+					<Toolbar xmlns="sap.m" id="idTblItm">
+						<content>
+							<Text text="{i18n>RepPage.itemstext}" />
+							<ToolbarSpacer xmlns="sap.m" />
+							<Button xmlns="sap.m" id="btnAdd" enabled="{settings>/oItem/bAdd}"
+								press="onAddItem" text="{i18n>btnAdd}" icon="sap-icon://add" />
+							<Button xmlns="sap.m" id="btnDel" press="onDeleteItem"
+								enabled="{settings>/oItem/bDelete}" text="{i18n>btnDelete}"
+								icon="sap-icon://delete" />
+							<Button xmlns="sap.m" id="btnUpload" enabled="{settings>/oItem/bUpload}"
+								press="onUploadItems" text="{i18n>btnUpload}" icon="sap-icon://upload" />
+						</content>
+					</Toolbar>
+				</headerToolbar>
 
-	</FixFlex>
-	<Dialog xmlns="sap.m" id="idFormDialog" stretch="false"
-		contentWidth="80%" contentHeight="80%" resizable="true"
-		afterOpen=".oItemDlgController.onAfterOpen" afterClose=".oItemDlgController.onAfterClose ">
+			</Panel>
+			<Panel id="idItemDetail" expandable="true" expanded="false">
+				<headerToolbar>
+					<Toolbar>
+						<Text text="{i18n>RepPage.itemdetailstext}" />
+						<Text text="{zas_rownum}" />
+						<ToolbarSpacer />
+						<Button icon="sap-icon://navigation-up-arrow" press="onNavPrevItem" />
+						<Button icon="sap-icon://navigation-down-arrow" press="onNavNextItem" />
+					</Toolbar>
+				</headerToolbar>
+			</Panel>
+		</content>
+	</Page>
 
-		<buttons>
-			<Button text="{i18n>btnErrors}" press=".oItemDlgController.onBtnDisplayErrors"
-				enabled="false" />
-			<Button text="{i18n>btnSave}" press=".oItemDlgController.onBtnSaveDialog" />
-			<Button text="{i18n>btnClose}" press=".oItemDlgController.onBtnCloseDialog" />
-		</buttons>
-	</Dialog>
+
 </mvc:View>

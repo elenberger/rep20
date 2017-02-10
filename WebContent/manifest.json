@@ -4,7 +4,7 @@
 	"sap.app": 
 	{
 		"_version": "2.0.1",
-		"id": "sap.ui.zmbr.asrep",
+		"id": "sap.ui.zmbr.asrep20",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"applicationVersion": 
@@ -22,6 +22,7 @@
 				"settings": 
 				{
 					"defaultCountMode": "None",
+					"defaultOperationMode": "Client",
 					"defaultBindingMode": "TwoWay",
 					"odataVersion": "2.0",
 					"refreshAfterChange": "false"
@@ -84,7 +85,7 @@
 
 		"rootView": 
 		{
-			"viewName": "sap.ui.zmbr.asrep.RES.App",
+			"viewName": "sap.ui.zmbr.asrep20.RES.App",
 			"id": "idApp",
 			"type": "XML"
 		},
@@ -101,7 +102,7 @@
 			{
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
-				"viewPath": "sap.ui.zmbr.asrep.RES",
+				"viewPath": "sap.ui.zmbr.asrep20.RES",
 				"controlId": "idApp",
 				"controlAggregation": "pages",
 				"transition": "slide",
@@ -177,7 +178,7 @@
 
 		"extends": 
 		{
-			"component": "sap.ui.zmbr.asrep",
+			"component": "sap.ui.zmbr.asrep20",
 			"extensions": 
 			{
 				

@@ -1,23 +1,25 @@
-jQuery.sap.declare("sap.ui.zmbr.asrep.modelhelper");
+jQuery.sap.declare("sap.ui.zmbr.asrep20.modelhelper");
 
-sap.ui.zmbr.asrep.modelhelper = function(oModel) {
+sap.ui.zmbr.asrep20.modelhelper = function(oModel) {
 
 	return {
 
 		oModel : oModel,
 
-		submitChanges : function(callback) {
+		submitChanges : function(callback, sGroupId) {
 
 			// Clear old messages
 
 			sap.ui.getCore().getMessageManager().removeAllMessages();
 
-			if (!oModel.hasPendingChanges())
-				return callback(-1);
+//			if (!oModel.hasPendingChanges())
+//				return callback(-1);
 
 			var iErrCount = 0;
 
 			oModel.submitChanges({
+				merge: false,
+				groupId: sGroupId,
 				// Data has reach gateway and successfully processed
 				success : function(data) {
 
